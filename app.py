@@ -5,6 +5,20 @@ import streamlit as st
 import pandas as pd
 import strava
 from pandas.api.types import is_numeric_dtype
+import datetime
+
+def prediction(weight, ftp):
+    wpkg = ftp/weight
+    time = (180*60)/wpkg
+    hours=int(time/3600)
+    if hours >0:
+        minutes =int((time-3600)/60)
+    else: minutes = int((time)/60)
+    seconds = int(time - hours - minutes*60)
+    result = {'hours':hours,
+              'minutes':minutes,
+              'seconds':seconds}
+    return result
 
 
 st.set_page_config(
@@ -34,16 +48,35 @@ if strava_auth is None:
     # )
     st.stop()
 
-
-
 athlete = strava.get_athlete(strava_auth)
+try:
+    weight = int(athlete["weight"])
+except:
+    weight = int(77)
+try:
+    ftp=int(athlete['ftp'])
+except:
+    ftp = int(200)
+
+
+
 st.text(f'{strava_auth["athlete"]["firstname"]} great you participate in the alpe du zwift event')
 
-st.text(str(strava_auth["athlete"]["weight"]) +' kg is not going to help you but still you might make it to the top..')
+st.text(str(weight) +' kg is not going to help you but still you might make it to the top..')
+weight = st.number_input('Adjust your weight if necessary:',45,150, value=weight)
+st.text(f'Your ftp from strava is:{ftp}')
+ftp = st.number_input('If necessary adjust it for the Alpe time prediction',100,500, value=ftp)
 st.text("Your prior zwift activities show a great upwards trend")
-st.dataframe(strava.all_strava_activity(auth=strava_auth).style.format(subset=['distance','average_watts','weighted_average_watts','suffer_score'], formatter="{:.1f}"))
+try:
+    st.dataframe(strava.all_strava_activity(auth=strava_auth).style.format(subset=['distance','average_watts','weighted_average_watts','suffer_score'], formatter="{:.1f}"))
+except:
+    pass
+predicted = prediction(weight=weight,ftp=ftp)
 
-st.header('Your predicted time to the top of the alpe is 52 minutes and 13 seconds')
+if predicted['hours']>1:
+    st.header(f"Your predicted time to the top of the alpe is {predicted['hours']} uur, {predicted['minutes']} minutes and {predicted['seconds']} seconds")
+else:
+    st.header(f"Your predicted time to the top of the alpe is {predicted['minutes']} minutes and {predicted['seconds']} seconds")
 # activity = strava.select_strava_activity(strava_auth)
 # data = strava.download_activity(activity, strava_auth)
 # csv = data.to_csv()
