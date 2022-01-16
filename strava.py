@@ -61,7 +61,7 @@ def login_header(header=None):
         base = button
 
     with col1:
-        powered_by_strava_logo()
+        pass# powered_by_strava_logo()
 
     base64_image = load_image_as_base64("./static/btn_strava_connectwith_orange@2x.png")
     base.markdown(
@@ -244,7 +244,7 @@ def all_strava_activity(auth):
         activity_list = []
         for activity in activities:
             if activity['type'] == "VirtualRide":
-                activity_list.append([activity['name'], round(activity['distance']/1000,1),activity['average_watts']*0.6, activity['weighted_average_watts']*0.6, round(activity['suffer_score'],1)])
+                activity_list.append([activity['name'], round(activity['distance']/1000,1),activity['average_watts'], activity['weighted_average_watts'], round(activity['suffer_score'],1)])
     #     default_activity = {"name": DEFAULT_ACTIVITY_LABEL, "start_date_local": ""}
     #
     #     activity = st.selectbox(

@@ -32,7 +32,7 @@ strava_header = strava.header()
 
 st.markdown(
     """
-    # :mountain_bicyclist: PwCs Alpe predictor
+    # :mountain_bicyclist: DA Alpe predictor
     Authenticate your strava and see your prediction for the Alpe!
     """
 )
