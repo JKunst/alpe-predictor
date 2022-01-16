@@ -9,9 +9,13 @@ from bokeh.models.widgets import Div
 import pandas as pd
 
 
-APP_URL = os.environ["APP_URL"]
-STRAVA_CLIENT_ID = os.environ["STRAVA_CLIENT_ID"]
-STRAVA_CLIENT_SECRET = os.environ["STRAVA_CLIENT_SECRET"]
+# APP_URL = os.environ["APP_URL"]
+# STRAVA_CLIENT_ID = os.environ["STRAVA_CLIENT_ID"]
+# STRAVA_CLIENT_SECRET = os.environ["STRAVA_CLIENT_SECRET"]
+STRAVA_CLIENT_ID=60818
+STRAVA_CLIENT_SECRET='58f6b38dc1d4f4281a6ebb15522360985adb733b'
+APP_URL='http://streamlit-activity-viewer.localhost'
+
 STRAVA_AUTHORIZATION_URL = "https://www.strava.com/oauth/authorize"
 STRAVA_API_BASE_URL = "https://www.strava.com/api/v3"
 DEFAULT_ACTIVITY_LABEL = "NO_ACTIVITY_SELECTED"

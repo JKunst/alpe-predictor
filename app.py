@@ -2,10 +2,9 @@ import base64
 
 import altair as alt
 import streamlit as st
-
+import pandas as pd
 import strava
 from pandas.api.types import is_numeric_dtype
-import pandas as pd
 
 
 st.set_page_config(
