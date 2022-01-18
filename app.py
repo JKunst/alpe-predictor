@@ -56,8 +56,10 @@ def prediction(weight, ftp):
     hours=int(time/3600)
     if hours >0:
         minutes =int((time-3600)/60)
-    else: minutes = int((time)/60)
-    seconds = int(time - hours - minutes*60)
+        seconds = int(time - hours*3600 - minutes * 60)
+    else:
+        minutes = int((time)/60)
+        seconds = int(time - hours - minutes*60)
     result = {'hours':hours,
               'minutes':minutes,
               'seconds':seconds}
