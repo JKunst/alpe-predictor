@@ -287,6 +287,9 @@ def all_strava_activity(auth):
         activity_list = []
         for activity in activities:
             if activity['type'] in ["Ride", "VirtualRide"]:
+                try:
+                    av_watts = activity['average_watts']
+                except: pass
                 activity_list.append([
                     activity['id'],
                 activity['athlete']['id'],
@@ -296,7 +299,7 @@ def all_strava_activity(auth):
                 activity['type'],
                 activity['start_date'],
                 activity['average_speed'],
-                activity['average_watts'],
+                av_watts,
                 #activity['weighted_average_watts'],
                 activity['suffer_score']])
 

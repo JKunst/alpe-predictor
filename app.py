@@ -115,8 +115,8 @@ st.text("Your prior zwift activities show a great upwards trend")
 
 predicted = prediction(weight=weight,ftp=ftp)
 
-if predicted['hours']>1:
-    st.header(f"Your predicted time to the top of the alpe is {predicted['hours']} uur, {predicted['minutes']} minutes and {predicted['seconds']} seconds")
+if predicted['hours']>=1:
+    st.header(f"Your predicted time to the top of the alpe is {predicted['hours']} hour, {predicted['minutes']} minutes and {predicted['seconds']} seconds")
 else:
     st.header(f"Your predicted time to the top of the alpe is {predicted['minutes']} minutes and {predicted['seconds']} seconds")
 
@@ -128,6 +128,7 @@ except:
 st.markdown('Just like the Alpe dHuez from the Tour de France, this route is 12.24 km (7.6 miles) long, with a total elevation gain of over 1000 meters (3400′)! It’s a brutal 8.5% gradient, which is never constant - you have to deal with frequent ramps of 13-14%. The Road to Sky route is 17 km and is the shortest route to include the Alpe. '
             ' route includes the run down into the Jungle - wave to the sloth and pass the ruins, then turn off the gravel and hit the first 10% ramp. Don’t be fooled; even this meagre 17 km route will take in excess of 1 hour at a strong pace! '
             ' you ride the entire way up at 3 w/kg I would expect you to summit in around 1 hour; the fastest times on the official Strava segment by Zwift Insider are 31:35 for men, by Brent House and 35:18 for women, by Vegan Soldier. ')
+
 
 activities = strava.all_strava_activity(auth=strava_auth)
 old = get_sheet_data(0)
