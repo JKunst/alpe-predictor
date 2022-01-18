@@ -279,7 +279,7 @@ def zwift_strava_activity(auth):
 
 @st.cache(show_spinner=False)
 def all_strava_activity(auth):
-    for page in [1, 4]:
+    for page in [1, 100]:
         activities = get_activities(auth=auth, page=page)
 
         if not activities:
