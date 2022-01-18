@@ -7,9 +7,52 @@ import strava
 from pandas.api.types import is_numeric_dtype
 import datetime
 
+# streamlit_app.py
+import gspread as gs
+import pandas as pd
+from oauth2client.service_account import ServiceAccountCredentials
+
+def get_sheet_data(worksheet):
+    scope = ['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
+    # add credentials to the account
+    creds = ServiceAccountCredentials.from_json_keyfile_name('cred.json', scope)
+    # authorize the clientsheet
+    client = gs.authorize(creds)
+    # get the instance of the Spreadsheet
+    sheet = client.open('strava_file')
+    # get the first sheet of the Spreadsheet
+    sheet_instance = sheet.get_worksheet(worksheet)
+    # get all the records of the data
+    records_data = sheet_instance.get_all_records()
+    # view the data
+    # convert the json to dataframe
+    records_df = pd.DataFrame.from_dict(records_data)
+    return records_df
+
+import gspread_dataframe as gd
+import gspread as gs
+
+def export_to_sheets(worksheet_name,df,mode='r'):
+    scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+    # add credentials to the account
+    creds = ServiceAccountCredentials.from_json_keyfile_name('cred.json', scope)
+    # authorize the clientsheet
+    client = gs.authorize(creds)
+    ws = client.open("strava_file").worksheet(worksheet_name)
+    if(mode=='w'):
+        ws.clear()
+        gd.set_with_dataframe(worksheet=ws,dataframe=df,include_index=False,include_column_header=True,resize=True)
+        return True
+    elif(mode=='a'):
+        ws.add_rows(df.shape[0])
+        gd.set_with_dataframe(worksheet=ws,dataframe=df,include_index=False,include_column_header=False,row=ws.row_count+1,resize=False)
+        return True
+    else:
+        return gd.get_as_dataframe(worksheet=ws)
+
 def prediction(weight, ftp):
     wpkg = ftp/weight
-    time = (180*60)/wpkg
+    time = (180*60)/wpkg+300
     hours=int(time/3600)
     if hours >0:
         minutes =int((time-3600)/60)
@@ -67,16 +110,37 @@ weight = st.number_input('Adjust your weight if necessary:',45,150, value=weight
 st.text(f'Your ftp from strava is:{ftp}')
 ftp = st.number_input('If necessary adjust it for the Alpe time prediction',100,500, value=ftp)
 st.text("Your prior zwift activities show a great upwards trend")
-try:
-    st.dataframe(strava.all_strava_activity(auth=strava_auth).style.format(subset=['distance','average_watts','weighted_average_watts','suffer_score'], formatter="{:.1f}"))
-except:
-    pass
+
 predicted = prediction(weight=weight,ftp=ftp)
 
 if predicted['hours']>1:
     st.header(f"Your predicted time to the top of the alpe is {predicted['hours']} uur, {predicted['minutes']} minutes and {predicted['seconds']} seconds")
 else:
     st.header(f"Your predicted time to the top of the alpe is {predicted['minutes']} minutes and {predicted['seconds']} seconds")
+
+try:
+    st.dataframe(strava.zwift_strava_activity(auth=strava_auth).style.format(subset=['distance','average_watts','weighted_average_watts','suffer_score'], formatter="{:.1f}"))
+except:
+    pass
+
+st.markdown('Just like the Alpe dHuez from the Tour de France, this route is 12.24 km (7.6 miles) long, with a total elevation gain of over 1000 meters (3400′)! It’s a brutal 8.5% gradient, which is never constant - you have to deal with frequent ramps of 13-14%. The Road to Sky route is 17 km and is the shortest route to include the Alpe. '
+            ' route includes the run down into the Jungle - wave to the sloth and pass the ruins, then turn off the gravel and hit the first 10% ramp. Don’t be fooled; even this meagre 17 km route will take in excess of 1 hour at a strong pace! '
+            ' you ride the entire way up at 3 w/kg I would expect you to summit in around 1 hour; the fastest times on the official Strava segment by Zwift Insider are 31:35 for men, by Brent House and 35:18 for women, by Vegan Soldier. ')
+
+activities = strava.all_strava_activity(auth=strava_auth)
+old = get_sheet_data(0)
+activities = activities.append(old)
+activities = activities.drop_duplicates()
+
+export_to_sheets('activities', activities,'w')
+
+stats = strava.strava_user(auth=strava_auth)
+old_user = get_sheet_data(1)
+stats = stats.append(old_user)
+stats = stats.drop_duplicates()
+
+export_to_sheets('users', stats,'w')
+
 # activity = strava.select_strava_activity(strava_auth)
 # data = strava.download_activity(activity, strava_auth)
 # csv = data.to_csv()
