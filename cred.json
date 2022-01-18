@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "tenacious-works-283209",
+  "private_key_id": "423f7c47a3b9a56da330ef7bbbb53b2204bfa74a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDGE4pae3UgAC1P\n1LSfWDRwQwmEDu31VoX6tSSHZYzNUvO/ENzeaOTkf1r6VvJtQMlhn+7mRtfGg4TP\n6dxz9Ir9EnDD7mhCCfzH8+4uUR7B1NxHiXDpyJXqkOfzhagR4XeP83jr42wESfmU\nrItfSi6cECzD3I13YkwNjJG9SBzQeBAuQ4+SAVh/i5uHLHtGwCdEsikgEXrQhfcP\nPQZrdMzPeTl955c9CXZALOFpX/9SyaO2DhV3rTklkXjm5sfvDju07QaLg6C+c6Nc\nn665vu8aWDMLqzzYWcXgA0+df32mEvq1+ceeQtlPS+10ij0u9woIeXOpXkyr1AhV\nM/tclXw9AgMBAAECggEAAO2kzTTmV+joTXTnvhZK4cPOqi5Y37ieqLJrfbE9ktVX\nQxmwRils1J+Z441R6GUr596mlfmx4J25LVX8rIHgCE8GrERmoB0tlT7jIXK5l5r2\nWeUxANnFPGGendAgi4Toa2W326Vw7HDLK4E0pycaIoiI33WLueWCCb0TMuwuvT7M\nHHXWrpA81EUD8YkAY5dnzl5zuHxQyiqZ2VNIsCxyjHiHWzTnpcO4n6Yy0hgWfaXp\nIeb0qpdx1ER4RNLpiqNGo4tB2rALyoHMvcAOsbUntOAwJggGlG23JpV3FMP8zrqn\nomuk5Bff5nnpRy8TBxSOX8dy39Fgd+bZ1FsKX7Su2QKBgQD4uYLDNKHHALuDiHcK\nDmTOmDZ4tbahe4zWc8bxixAGRFGLA8Sfh7MMPlAJtiAJuw4pp1zrmk7fTdUIQsk1\nkJxgX5c1eyVP3KxAzUfIQBzYtMEJ25TGk5B0vLCEd/k+QCUOxbqQmtiGNvVrCSWf\nneEwvTVPytaYm5yX3ujpF1sGTwKBgQDL3sRe9jT4qc65tYbUgaMNXxxbzw7FpBEq\nq6m/H0S9NIbX5VHiMbJAJKkDRiOcCMCKpR9srta8rCVALEyoLS7T+2ez0ZUqUZG3\nPIUDuVeP0oIQtve1eStOB+Z7LXHipA4+ZBuXcMw0jxanm+r87ot32okh3GppaZwo\nfaoyCQz9swKBgQCdmEWPVCjxQ7iMVgo+9/HNqUpSX6jRVsxdEUzLvTYxElasg32x\nKzU6m7zw+lIAeGI36FCLA+HXwaQqsM52vyMmOUtA2r9Ag+0sviUub9kXQihSC6yP\nye4s2WXq+W2WkOQqIQTeHQ72s5n68PfC1DFcRXajET25wleNLvNaxa6qJwKBgHXh\n5rxeMv0B+yYI3+Cq4SRPNa+kh48iskZxImL/6phY8guObw2S3NYYHJ5nBRopOWQx\n3HzUkBhilduIgf7QuX4bpbglXNIufkpstSEVH5trBogxtAP7/11MVioteeeqIw5S\nhl3H/Fv7zQa3smX0bTKta5PnxqQTTBdhqnLqJtffAoGBAIhzMUIaLZrJ2+R3cn9X\nR0qIfJCbBF2TfwxtSTsLh8x4z0Lr06moMoCeekbZ/PpYZpNRvZubK31vp9vbnJf9\nY7m+BEMmnsWK7Co5fzC2vmKnTrls5GS0BxM1cICqT+cLPko6N0gph14JqZit1Aw8\n8/nYVSPGM9+E/hzOYKeKoyMT\n-----END PRIVATE KEY-----\n",
+  "client_email": "streamlit@tenacious-works-283209.iam.gserviceaccount.com",
+  "client_id": "106095113048904268188",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/streamlit%40tenacious-works-283209.iam.gserviceaccount.com"
+}

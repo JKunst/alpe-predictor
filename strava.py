@@ -7,6 +7,7 @@ import streamlit as st
 import sweat
 from bokeh.models.widgets import Div
 import pandas as pd
+import datetime
 
 
 APP_URL = os.environ["APP_URL"]
@@ -169,6 +170,18 @@ def get_athlete(auth):
     return response.json()
 
 @st.cache(show_spinner=False)
+def get_athlete_stats(auth, id):
+    access_token = auth["access_token"]
+    response = httpx.get(
+        url=f"{STRAVA_API_BASE_URL}/athletes/{id}/stats",
+        headers={
+            "Authorization": f"Bearer {access_token}",
+        },
+    )
+
+    return response.json()
+
+@st.cache(show_spinner=False)
 def get_activities(auth, page=1):
     access_token = auth["access_token"]
     response = httpx.get(
@@ -232,10 +245,24 @@ def select_strava_activity(auth):
 
     return activity
 
+@st.cache()
+def strava_user(auth):
+    athlete = get_athlete(auth)
+    id = athlete['id']
+    stats = get_athlete_stats(auth,id)
+    rr = stats['recent_ride_totals']
+    athlete_list = []
+    athlete_list.append([datetime.datetime.now(),
+        athlete['id'],
+        athlete['firstname'], athlete['lastname'], athlete['sex'], athlete['premium'],
+        athlete['ftp'], athlete['weight']])
 
-def all_strava_activity(auth):
 
+    athlete_list = pd.DataFrame(columns=['time','id','firstname','lastname','sex','premium','ftp','weight'], data=athlete_list)
+    return athlete_list
 
+@st.cache(show_spinner=False)
+def zwift_strava_activity(auth):
     for page in [1,100]:
         activities = get_activities(auth=auth, page=page)
 
@@ -243,30 +270,45 @@ def all_strava_activity(auth):
             break
         activity_list = []
         for activity in activities:
-            if activity['type'] == "VirtualRide":
+            if activity['type'] =="VirtualRide":
                 activity_list.append([activity['name'], round(activity['distance']/1000,1),activity['average_watts'], activity['weighted_average_watts'], round(activity['suffer_score'],1)])
-    #     default_activity = {"name": DEFAULT_ACTIVITY_LABEL, "start_date_local": ""}
-    #
-    #     activity = st.selectbox(
-    #         label="Select an activity",
-    #         options=[default_activity] + activities,
-    #         format_func=activity_label,
-    #     )
-    #
-    # if activity["name"] == DEFAULT_ACTIVITY_LABEL:
-    #     st.write("No activity selected")
-    #     st.stop()
-    #     return
-    #
-    # activity_url = f"https://www.strava.com/activities/{activity['id']}"
-    #
-    # st.markdown(
-    #     f"<a href=\"{activity_url}\" style=\"color:{STRAVA_ORANGE};\">View on Strava</a>",
-    #     unsafe_allow_html=True
-    # )
+
+
     activity_list = pd.DataFrame(columns=['name','distance','average_watts','weighted_average_watts','suffer_score'], data=activity_list)
     return activity_list
 
+@st.cache(show_spinner=False)
+def all_strava_activity(auth):
+    for page in [1, 4]:
+        activities = get_activities(auth=auth, page=page)
+
+        if not activities:
+            break
+        activity_list = []
+        for activity in activities:
+            if activity['type'] in ["Ride", "VirtualRide"]:
+                activity_list.append([
+                    activity['id'],
+                activity['athlete']['id'],
+                activity['name'],
+                activity['distance'],
+                activity['moving_time'],
+                activity['type'],
+                activity['start_date'],
+                activity['average_speed'],
+                activity['average_watts'],
+                #activity['weighted_average_watts'],
+                activity['suffer_score']])
+
+    activity_list = pd.DataFrame(
+         data=activity_list, columns=['id','athlete','name','distance',
+                'moving_time',
+                'type',
+                'start_date',
+                'average_speed',
+                'average_watts',
+                'suffer_score'])
+    return activity_list
 
 @st.cache(show_spinner=False, max_entries=30, allow_output_mutation=True)
 def download_activity(activity, strava_auth):

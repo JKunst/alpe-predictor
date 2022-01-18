@@ -3,4 +3,8 @@ arrow==1.2.1
 httpx==0.21.3
 bokeh==2.4.1
 sweat==0.24.0
-
+gspread
+google-api-python-client
+oauth2client
+gspread_dataframe
+datetime
