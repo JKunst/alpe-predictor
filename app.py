@@ -44,12 +44,11 @@ st.markdown(
     Authenticate your strava and see your prediction for the Alpe!
     """
 )
-
-strava_auth = strava.authenticate(header=strava_header, stop_if_unauthenticated=False)
-
-
-
-athlete = strava.get_athlete(strava_auth)
+try:
+    strava_auth = strava.authenticate(header=strava_header, stop_if_unauthenticated=False)
+    athlete = strava.get_athlete(strava_auth)
+except:
+    pass
 try:
     weight = int(athlete["weight"])
 except:
@@ -61,7 +60,7 @@ except:
 
 
 
-st.text(f'{strava_auth["athlete"]["firstname"]} great you participate in the alpe du zwift event')
+st.text('Great you participate in the alpe du zwift event')
 
 st.text(str(weight) +' kg is not going to help you but still you might make it to the top..')
 weight = st.number_input('Adjust your weight if necessary:',45,150, value=weight)
