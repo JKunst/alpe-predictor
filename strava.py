@@ -9,7 +9,6 @@ from bokeh.models.widgets import Div
 import pandas as pd
 import datetime
 
-
 APP_URL = os.environ["APP_URL"]
 STRAVA_CLIENT_ID = os.environ["STRAVA_CLIENT_ID"]
 STRAVA_CLIENT_SECRET = os.environ["STRAVA_CLIENT_SECRET"]
