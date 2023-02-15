@@ -1,5 +1,5 @@
-# Streamlit Activity Viewer for Strava
+# Streamlit alpe du zwift predictor
 
-Proof of concept Streamlit application that implements the Strava API OAuth2 authentication flow.
+Proof of concept Streamlit application.
 
-Visit the application [here](https://streamlit-activity-viewer.apps.gssns.io).
+Visit the application [here]([https://alpe-predictor.herokuapp.com/]).
